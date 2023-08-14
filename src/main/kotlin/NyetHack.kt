@@ -35,3 +35,5 @@ private fun createTitle(name: String): String {
         name.count { it.lowercase() in "aeiou" } > 4 -> "The Master of Vowels"
         else -> "The Renowned Hero"
     } }
+//создать игру-аркаду с котиками по мотивам чужого
+//с 208
