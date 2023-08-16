@@ -36,4 +36,4 @@ private fun createTitle(name: String): String {
         else -> "The Renowned Hero"
     } }
 //создать игру-аркаду с котиками по мотивам чужого
-//с 208
+//с 217

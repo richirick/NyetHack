@@ -1,4 +1,5 @@
 import java.io.File
+import kotlin.math.roundToInt
 
 private const val TAVERN_MASTER = "Taernyl"
 private const val TAVERN_NAME = "$TAVERN_MASTER's Folly"
@@ -18,22 +19,56 @@ fun visitTavern() {
     narrate("$heroName enters $TAVERN_NAME")
     narrate("There are several items for sale:")
     narrate(menuItems.joinToString())
+
     val patrons: MutableSet<String> = mutableSetOf()
+    val patronGold = mapOf(
+        TAVERN_MASTER to 86.00,
+        heroName to 4.50
+    )
+//    printMenu()
     while (patrons.size < 10) {
         patrons += "${firstNames.random()} ${lastNames.random()}"
+    }
+        println(patronGold)
+    println(patronGold["Madrigal"])
+    println(patronGold["Taernyl"])
+    println(patronGold["Eli"])
         narrate("$heroName sees several patrons in the tavern:")
         narrate(patrons.joinToString())
         repeat(3) {
             placeOrder(patrons.random(), menuItems.random())
         }
-    }
 
-    menuData.forEachIndexed { index, data ->
-        println("$index : $data")
-    }
+
+//    menuData.forEachIndexed { index, data ->
+//        println("$index : $data")
+//    }
 }
 
 private fun placeOrder(patronName: String, menuItemName: String) {
     narrate("$patronName speaks with $TAVERN_MASTER to place an order")
     narrate("$TAVERN_MASTER hands $patronName a $menuItemName")
 }
+//fun printMenu()
+//{
+//    println()
+//    val hello = "*** Welcome to $TAVERN_NAME ***"
+//    val cnt = hello.count()
+//    println(hello)
+//    println()
+//
+//    menuData.forEach { t ->
+//        val (type, name, price) = t.split(',')
+//        val nameOut = name[0].toUpperCase() + name.substring(1, name.count())
+//        val pos = price.indexOf('.')
+//        val priceOut = if (price.count() - pos == 2) {
+//            price + '0'
+//        } else {
+//            price
+//        }
+//        val s = nameOut.padEnd(cnt - priceOut.count(), '.')
+//        println(s + priceOut)
+//    }
+//    println()
+//}
+//220
