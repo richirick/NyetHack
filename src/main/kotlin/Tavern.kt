@@ -14,6 +14,15 @@ private val menuData = File("data/tavern-menu-data.txt")
 private val menuItems = List(menuData.size) { index ->
     val (_, name, _) = menuData[index].split(",")
     name }
+private val menuItemPrices: Map<String, Double> = List(menuData.size){
+    index -> val (_, name, price) = menuData[index].split(",")
+    name to price.toDouble()}
+    .toMap()
+private val menuItemTypes: Map<String, String> = List(menuData.size){
+    index -> val (type, name, _) = menuData[index].split(",")
+    name to type
+}.toMap()
+
 
 fun visitTavern() {
     narrate("$heroName enters $TAVERN_NAME")
@@ -37,11 +46,11 @@ fun visitTavern() {
 //    println(patronGold["Eli"])
         narrate("$heroName sees several patrons in the tavern:")
         narrate(patrons.joinToString())
-    println(patronGold)
+
         repeat(3) {
             placeOrder(patrons.random(), menuItems.random(), patronGold)
         }
-    println(patronGold)
+    displayPatronBalances(patronGold)
 
 
 //    menuData.forEachIndexed { index, data ->
@@ -52,10 +61,15 @@ fun visitTavern() {
 private fun placeOrder(patronName: String,
                        menuItemName: String,
 patronGold: MutableMap<String, Double>) {
-    val itemPrice = 1.0
+    val itemPrice = menuItemPrices.getValue(menuItemName)
     narrate("$patronName speaks with $TAVERN_MASTER to place an order")
     if (itemPrice <= patronGold.getOrDefault(patronName, 0.0)) {
-        narrate("$TAVERN_MASTER hands $patronName a $menuItemName")
+        val action = when (menuItemTypes[menuItemName]){
+            "shandy", "elixir" -> "pours"
+            "meal" -> "serves"
+            else -> "hands"
+        }
+        narrate("$TAVERN_MASTER $action $patronName a $menuItemName")
         narrate("$patronName pays $TAVERN_MASTER $itemPrice gold")
         patronGold[patronName] = patronGold.getValue(patronName) - itemPrice
         patronGold[TAVERN_MASTER] = patronGold.getValue(TAVERN_MASTER) + itemPrice
@@ -63,6 +77,13 @@ patronGold: MutableMap<String, Double>) {
     }
 
 }
+private fun displayPatronBalances(patronGold: Map<String, Double>) {
+    narrate("$heroName intuitively knows how much money each patron has")
+    patronGold.forEach{ (patron, balance) ->
+        narrate("$patron has ${"%.2f".format(balance)} gold")
+    }
+}
+
 //fun printMenu()
 //{
 //    println()
@@ -85,4 +106,6 @@ patronGold: MutableMap<String, Double>) {
 //    }
 //    println()
 //}
-//225
+
+//задание 231
+//232
