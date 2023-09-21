@@ -6,15 +6,15 @@ lateinit var player: Player
 fun main() {
 //    narrate("${player.name} is ${player.title}")
 //    player.changeName("Aurelia")
-   /* narrate("A hero enters the town of Kronstadt. What is their name?")
-    // Выводит сообщение желтым цветом
-    "\u001b[33;1m$message\u001b[0m"
-}
-{ message ->
-    val heroName = readLine()
-    require(heroName != null && heroName.isNotEmpty()) {
-        "The hero must have a name."
-    }*/
+    /* narrate("A hero enters the town of Kronstadt. What is their name?")
+     // Выводит сообщение желтым цветом
+     "\u001b[33;1m$message\u001b[0m"
+ }
+ { message ->
+     val heroName = readLine()
+     require(heroName != null && heroName.isNotEmpty()) {
+         "The hero must have a name."
+     }*/
 //    if (::player.isInitialized){
 //        narrate("Welcome to NeytHack, ${player.name}!")
 //    }
@@ -22,18 +22,7 @@ fun main() {
     val playerName = promptHeroName()
     player = Player(playerName)
     // changeNarratorMood()
-    player.prophesize()
-
-    var currentRoom: Room = Tavern()
-    val mortality = if (player.isImmortal) "an immortal" else "a mortal"
-    narrate("${player.name}, of ${player.hometown}, ${player.title}, is in ${currentRoom.description()}")
-    narrate("${player.name}, $mortality, has ${player.healthPoints} health points")
-    currentRoom.enterRoom()
-
-//  visitTavern()
-    player.castFireball()
-    player.prophesize()
-
+    Game.play()
 }
 private fun promptHeroName(): String {
     narrate("A hero enters the town of Kronstadt. What is their name?") { message ->
@@ -48,6 +37,24 @@ private fun promptHeroName(): String {
     println("Madrigal")
     return "Madrigal"
 }
+object Game{
+    var currentRoom: Room = TownSquare()
+    init {
+        narrate("Wekcome, adventurer")
+        val mortality = if (player.isImmortal) "an immortal" else "a mortal"
+        narrate("${player.name}, $mortality, has ${player.healthPoints} health points")
+
+    }
+    fun play(){
+        while (true){
+            narrate("${player.name}, of ${player.hometown}, ${player.title}, is in ${currentRoom.description()}")
+            currentRoom.enterRoom()
+
+            print("> Enter your command: ")
+            println("Last command: ${readln()}")
+        }
+    }
+}
 //private fun createTitle(name: String): String {
 //    return when {
 //        name.all { it.isDigit() } -> "The Identifiable"
@@ -56,4 +63,4 @@ private fun promptHeroName(): String {
 //        else -> "The Renowned Hero"
 //    } }
 //создать игру-аркаду с котиками по мотивам чужого
-//с 217
+//с 339
