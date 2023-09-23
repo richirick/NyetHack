@@ -1,5 +1,7 @@
 package com.bignerdranch.nyethack
 
+import kotlin.random.Random
+
 class Player (
     initialName: String,
     val hometown: String = "Neversummer",
@@ -64,6 +66,9 @@ class Player (
             healthPoints -=damage
         }
     }
+//    override fun attack(opponent: Fightable) {
+//
+//    }
 }
 //open class Weapon(val name: String, val type: String) {
 //    override fun equals(other: Any?): Boolean {
